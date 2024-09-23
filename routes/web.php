@@ -10,3 +10,4 @@ Route::get('/', function () {
  */
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/account/register',[AccountController::class,'registration'])->name('account.register');
+Route::post('/account/process-register',[AccountController::class,'processRegistration'])->name('account.processRegister');
