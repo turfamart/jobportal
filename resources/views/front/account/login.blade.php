@@ -5,7 +5,7 @@
         <div class="py-lg-2">&nbsp;</div>
         @if(session::has('success'))
         <div class="alert alert-success">
-            <p>{{ session::get('success') }}</p>
+            <p class="mb-0 pb-0">{{ session::get('success') }}</p>
         </div>
         @endif
         <div class="row d-flex justify-content-center">
