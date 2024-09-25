@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
@@ -22,6 +24,19 @@ class AccountController extends Controller
 
         if($validator->passes()){
 
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->name = Hash::make($request->password);
+            $user->name = $request->name;
+            $user->save();
+
+            $session()->flash('success','Your registration has been successful');
+
+            return response()->json([
+                'status' => true,
+                'errors' =>[]
+            ]);
         }
         else{
             return response()->json([
