@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,11 +28,11 @@ class AccountController extends Controller
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
-            $user->name = Hash::make($request->password);
-            $user->name = $request->name;
+            $user->password = Hash::make($request->password);
+          
             $user->save();
 
-            $session()->flash('success','Your registration has been successful');
+            Session()->flash('success','Your registration has been successful');
 
             return response()->json([
                 'status' => true,
@@ -53,17 +54,26 @@ class AccountController extends Controller
     public function authenticate(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'email' => 'required',
+            'email' => 'required | email',
             'password' => 'required',
        
         ]);
 
         if($validator->passes()) {
 
+            if(Auth::attempt(['email' => $request->email, 'password' =>$request->password])) {
+                return redirect()->route('account.profile');
+            } else {
+                return redirect()->route('account.login')->with('error','Either Email/Password is incorrect');
+            }
         } else {
             return redirect()->route('account.login')
                     ->withErrors($validator)
                     ->withInput($request->only('email'));
         }
+    }
+
+    public function profile(){
+        echo "profile page";
     }
 }
