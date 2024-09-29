@@ -74,6 +74,12 @@ class AccountController extends Controller
     }
 
     public function profile(){
-        echo "profile page";
+      return view('front.account.profile');
     }
+
+    public function logout(){
+        Auth::logout();
+
+        return redirect()->route('account.login');
+      }
 }
