@@ -11,4 +11,5 @@ Route::get('/', function () {
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/account/register',[AccountController::class,'registration'])->name('account.register');
 Route::post('/account/process-register',[AccountController::class,'processRegistration'])->name('account.processRegister');
-Route::post('/account/login',[AccountController::class,'login'])->name('account.login');
+Route::get('/account/login',[AccountController::class,'login'])->name('account.login');
+Route::post('/account/authenticate',[AccountController::class,'authenticate'])->name('account.authenticate');
